@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom"
 import { BACKEND_URL } from "../config";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { useState } from "react";
 import Spinner from "./Spinner";
 
@@ -34,8 +34,8 @@ export default function Login() {
         } catch(e) {
             // setError(true);
             // console.error("unable to register: " + e.response.data.msg);
-
-            if (e.response.status === 400) {
+            const error = e as AxiosError;
+            if (error.response?.status === 400) {
                 setErrorMsg("Invalid Input");
                 setError(true);
             } else {

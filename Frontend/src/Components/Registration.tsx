@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { BACKEND_URL } from "../config";
@@ -36,7 +36,8 @@ export default function Register() {
             setError(false);
             navigate("/blogs")
        } catch(e) {
-            if (e.response.status === 409) {
+            const error = e as AxiosError;
+            if (error.response?.status === 409) {
                 setErrorMsg("Email already exists");
                 setError(true);
             } else {
